@@ -1,0 +1,54 @@
+name: Build and release Android APK
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.32.0"
+          channel: stable
+          cache: true
+
+      - name: Install Flutter dependencies
+        run: flutter pub get
+        working-directory: flutter_app
+
+      - name: Analyze Flutter app
+        run: flutter analyze
+        working-directory: flutter_app
+
+      - name: Run Flutter tests
+        run: flutter test
+        working-directory: flutter_app
+
+      - name: Build release APK
+        run: flutter build apk --release
+        working-directory: flutter_app
+
+      - name: Publish APK to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: flutter_app/build/app/outputs/flutter-apk/app-release.apk
