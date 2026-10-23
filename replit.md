@@ -1,10 +1,13 @@
-# [Project name]
+# Flutter Starter
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A Flutter starter app with a responsive home screen, interactive counter, and light/dark theme toggle.
 
 ## Run & Operate
 
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `cd flutter_app && flutter run` — run the Flutter app on a selected device
+- `cd flutter_app && flutter run -d web-server --web-hostname 0.0.0.0 --web-port 8080` — run the browser preview
+- `cd flutter_app && flutter analyze && flutter test && flutter build web` — check and build the Flutter app
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
@@ -22,19 +25,21 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `flutter_app/` — Flutter app source, platform targets, and widget tests
+- `artifacts/api-server/` — shared Express API service
+- `artifacts/mockup-sandbox/` — component preview canvas
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Keep the mobile app as a standalone Flutter project alongside the pnpm workspace; use the custom Flutter Web Preview workflow for browser preview.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+The starter screen demonstrates responsive Flutter UI, a working counter with increment/decrement/reset actions, and a light/dark theme toggle. Android, iOS, and web project targets are included.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Flutter is required for the mobile app; do not replace it with Expo or React Native.
 
 ## Gotchas
 
